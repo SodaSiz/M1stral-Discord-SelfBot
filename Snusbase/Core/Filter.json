@@ -1,0 +1,20 @@
+{
+    "filter": [
+        "email",
+        "lastip",
+        "ip",
+        "name",
+        "firstname",
+        "lastname",
+        "username",
+        "hash",
+        "phone",
+        "salt",
+        "country",
+        "city",
+        "state",
+        "zip",
+        "company",
+        "address"
+    ]        
+}

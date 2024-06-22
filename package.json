@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "dev": "nodemon --config nodemon.json Main.ts",
+    "build": "tsc",
+    "start": "node ."
+  },
+  "dependencies": {
+    "discord.js-selfbot-v13": "^3.1.4",
+    "dotenv": "^16.4.5",
+    "glob": "^7.2.0",
+    "promisify": "^0.0.3"
+  }
+}
