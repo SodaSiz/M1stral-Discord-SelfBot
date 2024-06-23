@@ -12,7 +12,6 @@ export default {
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const cmdName = args.shift()?.toLowerCase();
-    if (!args.length) return;
 
     if (!cmdName) return;
 

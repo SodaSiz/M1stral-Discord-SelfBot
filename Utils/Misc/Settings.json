@@ -2,6 +2,14 @@
   "prefix": ".",
   "embed_var": {
     "color": "318CE7"
+  },
+
+  "MongoDB_Settings": {
+    "Telemetry": false,
+    "Connection_Settings": {
+      "useNewUrlParser": true,
+      "useUnifiedTopology": true
+    }
   }
 
 }

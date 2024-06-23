@@ -1,21 +1,16 @@
 import { Message } from 'discord.js-selfbot-v13';
-import { embed_var } from '../../Utils/Misc/Settings.json';
-import { send_request } from '../../Snusbase/Core/Send_Request';
-import type {ClientAttributes} from '../../Types/Client';
+import { get_output_snusbase } from '../../Snusbase/Core/Get_Output';
+import type { ClientAttributes } from '../../Types/Client';
 
 export default {
-  name: 'email',
-  description: 'Obtenir des informations sur l\'EMail d\'une personne',
-  run: (client: ClientAttributes, message: Message, args: string[]) => {
-    console.log(args)
-    message.delete()
-    send_request('data/search', {
-      terms: [args[0]],
-      types: ['email'],
-      wildcard: false
-    }).then(response => {
-      console.log(JSON.stringify(response.results))
-      message.channel.send(`\`\`\`json\n${JSON.stringify(response.results, null, 2)}\n\`\`\``);
-    })
-  },
-}
+    name: 'email',
+    description: 'Obtenir des informations sur l\'EMail d\'une personne',
+    run: async (client: ClientAttributes, message: Message, args: string[]) => {
+      message.delete();
+
+      // Appel asynchrone à get_output_snusbase
+      const result = await get_output_snusbase('data/search', { terms: [args[0]], types: ['email'], wildcard: false });
+
+      message.channel.send(result);
+    },
+};

@@ -19,5 +19,4 @@ process.on('uncaughtException', (err, origin) => {console.log(`UNCAUGHT_EXCEPTIO
 process.on('unhandledRejection', (promise, reason) => {console.log(`UNHANDLED_REJECTION: REASON: \n${reason}\n\nPROMISE:\n${promise}`)});
 process.on('warning', (...args) => {console.log('WARNING:\n', ...args)});
 
-
 loadHandlers().then(() => client.login(process.env.TOKEN));
