@@ -8,7 +8,7 @@ export async function get_output_snusbase(url: string, body: object) {
     if (typeof response === 'string') {
         return response;
     } else {
-        if (JSON.stringify(response)) {
+        if (JSON.stringify(response) == '{}') {
             return "Aucune information n'a été retrouvée lors de la recherche.";
         }
         return `\`\`\`json\n${JSON.stringify(response.results, null, 2)}\`\`\``;

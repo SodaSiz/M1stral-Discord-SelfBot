@@ -1,14 +1,30 @@
 import mongoose from 'mongoose';
 import type { ClientAttributes } from '../../Types/Client';
 import 'dotenv/config';  // Ensure dotenv is loaded to access .env variables
-import { MongoDB_Settings, prefix } from '../../Utils/Misc/Settings.json';
+import { MongoDB_Settings, prefix, RPC } from '../../Utils/Misc/Settings.json';
 import Telemetry from '../../Models/Telemetry';
+import fs from 'fs';
+import { PresenceData } from 'discord.js-selfbot-v13';
 
 export default {
   name: 'ready',
   async execute(client: ClientAttributes) {
+
+    // RichPresence
+
+    let presenceData: PresenceData;
+    try {
+      const data = fs.readFileSync('./Utils/Misc/RPC.json', 'utf8');
+      presenceData = JSON.parse(data);
+    } catch (err) {
+      console.error('Erreur lors de la lecture du fichier JSON:', err);
+      return;
+    }
     console.log('Hackerman');
 
+    client.user?.setPresence(presenceData);
+    
+    // MongoDB Setup
     if (MongoDB_Settings.Telemetry) {
       if (process.env.MONGODB_URI) {
         const database_connection = async () => {
