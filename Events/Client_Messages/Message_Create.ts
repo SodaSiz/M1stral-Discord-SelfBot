@@ -17,6 +17,13 @@ export default {
 
     const cmd = client.commands.get(cmdName);
 
-    if (cmd) cmd.run(client, message, args);
+    
+    if (cmd) {
+      if (cmd.args == true && !args.length)
+          return message.reply(`**Vous devez spécifier des arguments pour votre commande !**\nPour plus de détail, executez \`${prefix}help ${cmdName}\``)
+      message.delete()
+      cmd.run(client, message, args)
+    }
+    else return message.reply(`**Cette commande n'existe pas !**\nPour obtenir la liste des commandes, veuillez executer la commande \`${prefix}help\``)
   }
 }

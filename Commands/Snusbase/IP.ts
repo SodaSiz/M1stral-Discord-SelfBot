@@ -5,12 +5,14 @@ import type { ClientAttributes } from '../../Types/Client';
 export default {
     name: 'ip',
     description: 'Obtenir des informations sur l\'adresse IP d\'une personne',
+    usage: '<Adresse IP>',
+    args: true,
     run: async (client: ClientAttributes, message: Message, args: string[]) => {
-      message.delete();
-
       // Appel asynchrone à get_output_snusbase
-      const result = await get_output_snusbase('data/search', { terms: [args[0]], types: ['lastip'], wildcard: false });
+      const results = await get_output_snusbase('data/search', { terms: [args[0]], types: ['lastip'], wildcard: false });
 
-      message.channel.send(result);
-    },
+      for (const result of results) {
+        await message.channel.send(result);
+      }
+    }
 };

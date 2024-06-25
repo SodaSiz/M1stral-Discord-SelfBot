@@ -10,17 +10,5 @@
       "useNewUrlParser": true,
       "useUnifiedTopology": true
     }
-  },
-
-  "RPC": {
-    
-    "Type": "STREAMING",
-    "Status": "online",
-    "Buttons": {
-      "Github": "https://github.com/SodaSiz",
-      "Youtube": "https://www.youtube.com/channel/UC4tpnQLw5FldvNF89uVioew"
-    },
-    "Name": ["Snusbase SelfBot", "AlanIsBack2024", "Siz420", "LOZOED", "Enzo Liberie"]
   }
-
 }

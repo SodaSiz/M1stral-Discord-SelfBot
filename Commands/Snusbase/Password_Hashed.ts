@@ -4,14 +4,15 @@ import type { ClientAttributes } from '../../Types/Client';
 
 export default {
     name: 'password_hashed',
-
     description: 'Obtenir des informations avec un mot de passe hashé d\'une personne',
+    usage: '<Mot de passe hashé>',
+    args: true,
     run: async (client: ClientAttributes, message: Message, args: string[]) => {
-      message.delete();
-
       // Appel asynchrone à get_output_snusbase
-      const result = await get_output_snusbase('tools/hash-lookup', { terms: [args[0]], types: ['hash'] });
+      const results = await get_output_snusbase('tools/hash-lookup', { terms: [args[0]], types: ['hash'] });
 
-      message.channel.send(result);
+      for (const result of results) {
+        await message.channel.send(result);
+      }
     },
 };

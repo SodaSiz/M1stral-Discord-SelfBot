@@ -5,12 +5,14 @@ import type { ClientAttributes } from '../../Types/Client';
 export default {
     name: 'name',
     description: 'Obtenir des informations avec le nom et le prénom d\'une personne',
+    usage: '<Prénom> <Nom',
+    args: true,
     run: async (client: ClientAttributes, message: Message, args: string[]) => {
-      message.delete();
-
       // Appel asynchrone à get_output_snusbase
-      const result = await get_output_snusbase('data/search', { terms: `${args[0]} ${args[1]}`, types: ['name'] });
+      const results = await get_output_snusbase('data/search', { terms: `${args[0]} ${args[1]}`, types: ['name'] });
 
-      message.channel.send(result);
+      for (const result of results) {
+        await message.channel.send(result);
+      }
     },
 };

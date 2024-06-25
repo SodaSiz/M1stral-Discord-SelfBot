@@ -23,9 +23,11 @@ export default async (client: ClientAttributes) => {
     // Set the category for the command
     cmd.category = category;
 
-    if (!cmd.name || (!cmd.description && cmd.type !== 'USER')) {
+    if (!cmd.name || (!cmd.description && cmd.type !== 'USER')) 
       return console.log(`\n⚠ ================\nCommande non chargée: ${!cmd.name ? 'Pas de nom' : 'Pas de description'} \nFichier --> ${cmdFile}\n⚠ ================\n\n`);
-    }
+
+    if (cmd.args === true && !cmd.usage)
+      return console.log(`\n⚠ ================\nCommande non chargée: Requière des arguments mais ne précise pas leurs usages \nFichier --> ${cmdFile}\n⚠ ================\n\n`);
 
     client.commands.set(cmd.name, cmd);
     // console.log(`Commande chargée: ${cmd.name} (Category: ${category})`);
