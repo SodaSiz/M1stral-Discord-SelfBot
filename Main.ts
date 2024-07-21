@@ -26,6 +26,7 @@ const loadHandlers = async (handlers: string[]) => {
     }
 };
 
+// Fonction principale pour initialiser le bot
 (async () => {
     try {
         // Lire le fichier de démarrage
@@ -36,9 +37,11 @@ const loadHandlers = async (handlers: string[]) => {
         
         // Charger les gestionnaires
         await loadHandlers(['Commands', 'Events']);  // Ajoutez ou retirez les noms de fichiers ici
+
+        // Connexion du client
         await client.login(process.env.TOKEN);
+        logger.info('Le client est connecté.');
     } catch (error) {
         logger.error(`Erreur lors de l'initialisation du client : ${error}`);
     }
 })();
-

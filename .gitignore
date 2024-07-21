@@ -2,6 +2,6 @@
 node_modules
 Utils/Misc/Settings.json
 Utils/Misc/RPC.json
-Utils/Misc/RPC
-Outputs
+Utils/Misc/RPC/
+Utils/Misc/Logs/
 Snusbase/Results/
