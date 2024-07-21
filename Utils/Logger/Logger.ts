@@ -3,7 +3,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import 'dotenv/config'
 // Chemin du dossier Outputs
-const outputsDir = path.join(process.env.LOGS_DIRECTORY || process.cwd(), '../../Utils/Misc/Logs/');
+const outputsDir = path.join(process.env.LOGS_DIRECTORY || process.cwd(), '../../Misc/Logs/');
 
 // Fonction pour créer le dossier Outputs si il n'existe pas
 const ensureOutputsDirExists = async () => {

@@ -1,32 +1,58 @@
-import {Client} from 'discord.js-selfbot-v13';
-import {promisify} from 'util';
-import {eventsList} from '../../Lists/Events.json';
-import {glob} from 'glob';
+import { Client } from 'discord.js-selfbot-v13';
+import { promises as fs } from 'fs';
+import { basename, dirname, join } from 'path';
 import AsciiTable from 'ascii-table';
-import {basename, dirname} from 'path';
+import { eventsList } from '../../Lists/Events.json';
 
-const pGlob = promisify(glob);
+// Table pour afficher les événements
+const table = new AsciiTable('Évenements');
+table.setHeading('Nom', 'Catégorie');
 
-let table = new AsciiTable('Évenements')
-table.setHeading('Nom', 'Catégorie')
+// Fonction récursive pour lire les fichiers d'un répertoire
+async function getFiles(dir: string): Promise<string[]> {
+  let files: string[] = [];
+  const entries = await fs.readdir(dir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const fullPath = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files = [...files, ...(await getFiles(fullPath))];
+    } else if (entry.isFile() && entry.name.endsWith('.ts')) {
+      files.push(fullPath);
+    }
+  }
+
+  return files;
+}
 
 export default async (client: Client) => {
-  const eventFiles = await pGlob(`${process.cwd()}/Events/*/*.ts`);
+  // Obtenir tous les fichiers d'événements
+  const eventFiles = await getFiles(join(process.cwd(), 'Events'));
+
   await Promise.all(eventFiles.map(async (eventFile) => {
-    const {default: event} = await import(`${eventFile}`);
+    // Importer le module d'événement
+    const { default: event } = await import(eventFile);
 
+    // Extraire la catégorie depuis la structure des répertoires
     const category = basename(dirname(eventFile));
-    
-    if (!eventsList.includes(event.name) || !event.name)
-      return console.log(`\n⚠ ================\nÉvenement non chargée: ${event.name ? `\nNom mal écris\nNom entrée: ${event.name}\n` : 'Aucun nom entrée'} \nFichier --> ${eventFile}\n⚠ ================\n\n`);
 
-    if (event.once)
+    // Vérifier la validité de l'événement
+    if (!eventsList.includes(event.name) || !event.name) {
+      return console.log(`\n⚠ ================\nÉvenement non chargée: ${event.name ? `\nNom mal écrit\nNom entrée: ${event.name}\n` : 'Aucun nom entré'} \nFichier --> ${eventFile}\n⚠ ================\n\n`);
+    }
+
+    // Enregistrer l'événement dans le client
+    if (event.once) {
       client.once(event.name, (...args) => event.execute(client, ...args));
-    else
+    } else {
       client.on(event.name, (...args) => event.execute(client, ...args));
+    }
 
-    // console.log(`Évenement chargé: ${event.name}`);
-    table.addRow(event.name, category)
+    // Ajouter l'événement à la table
+    table.addRow(event.name, category);
   }));
-  console.log(table.toString())
-}
+
+  // Afficher la table
+  console.log(table.toString());
+};
+
