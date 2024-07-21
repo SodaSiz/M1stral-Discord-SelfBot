@@ -59,7 +59,7 @@ export async function snusbase_discord_messages(
 
 	// Utiliser splitJsonMessages pour diviser les messages longs
 	for (const result of results) {
-		const splitMessages = splitJsonMessages(result);
+		const splitMessages = splitJsonMessages(result, 11);
 		for (const msg of splitMessages) {
 			await message.channel.send(`\`\`\`json\n${msg}\n\`\`\``);
 		}
