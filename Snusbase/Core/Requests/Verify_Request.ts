@@ -5,6 +5,6 @@ export function verify_request(json: JsonObject) {
 		return `**Une erreur est survenue lors de la récupération des données dans la base de données de Snusbase.
 Vous avez probablement excedé le quota d'utilisation pour votre abonnement.**
 Détails :
-${json.errors[0]}`
+${json.errors[0]}`;
 	else return json;
 }

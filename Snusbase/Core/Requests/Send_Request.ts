@@ -13,5 +13,5 @@ export async function send_request(url: string, body: object) {
   };
 
   const response = await fetch(snusbase_api + url, options);
-  return response.json();
+  return await response.json();
 }

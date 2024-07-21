@@ -1,6 +1,6 @@
 import {Client} from 'discord.js-selfbot-v13';
 import {promisify} from 'util';
-import {eventsList} from '../Lists/Events.json';
+import {eventsList} from '../../Lists/Events.json';
 import {glob} from 'glob';
 import AsciiTable from 'ascii-table';
 import {basename, dirname} from 'path';

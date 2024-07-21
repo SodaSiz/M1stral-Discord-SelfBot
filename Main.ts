@@ -1,33 +1,44 @@
-import {Client, Collection} from 'discord.js-selfbot-v13';
-import type {ClientAttributes} from './Types/Client';
+import { Client, Collection } from 'discord.js-selfbot-v13';
+import type { ClientAttributes } from './Types/Client';
 import 'dotenv/config';
-import {promises} from 'fs';
-import {log_figlet} from './Utils/Misc/ASCII/Figlet'
+import logger from './Utils/Logger/Logger';
+import { attachErrorHandlers } from './Utils/Handlers/Errors/Attach_On_Error';
+import { readStartupFile } from './Utils/Misc/ASCII/Startup';
 
-// Lecture du fichier de manière asynchrone
-promises.readFile('./Utils/Misc/ASCII/startup.txt', 'utf8')
-    .then(data => {
-        console.log(data);
-    })
-    .catch(error => {
-        console.error("Erreur lors de la lecture du fichier :", error);
-    });
-
-const client: ClientAttributes = new Client() as ClientAttributes;
-
+// Création du client
+const client = new Client() as ClientAttributes;
 client.commands = new Collection();
 
-const loadHandlers = async () => {
-  const handlers = ["Commands", "Events"];
-  await Promise.all(handlers.map(async (handler) => {
-    const module = await import(`./Utils/Handlers/${handler}`);
-    module.default(client);
-  }));
+// Fonction pour charger les gestionnaires dynamiquement
+const loadHandlers = async (handlers: string[]) => {
+    try {
+        await Promise.all(handlers.map(async (handler) => {
+            const module = await import(`./Utils/Handlers/Bot/${handler}`);
+            if (module.default) {
+                module.default(client);
+            } else {
+                logger.error(`Module ${handler} ne possède pas d'export par défaut`);
+            }
+        }));
+    } catch (error) {
+        logger.error(`Erreur lors du chargement des handlers : ${error}`);
+        throw error;  // Re-throw l'erreur après l'avoir loggée
+    }
 };
 
-process.on('exit', (code) => {console.log(log_figlet('Fin de tache...'), `Le processus s'est arrêté avec le code ${code}`)});
-process.on('uncaughtException', (err, origin) => {console.log(log_figlet('Oops...'), `UNCAUGHT_EXCEPTION: ERROR:\n${err}\n\nORIGIN:\n${origin}`);});
-process.on('unhandledRejection', (promise, reason) => {console.log(log_figlet('Oops...'), `UNHANDLED_REJECTION: REASON: \n${reason}\n\nPROMISE:\n${promise}`)});
-process.on('warning', (...args) => {console.log(log_figlet('Warning !'), ...args)});
+(async () => {
+    try {
+        // Lire le fichier de démarrage
+        await readStartupFile();
+        
+        // Attacher les gestionnaires d'erreurs
+        attachErrorHandlers();
+        
+        // Charger les gestionnaires
+        await loadHandlers(['Commands', 'Events']);  // Ajoutez ou retirez les noms de fichiers ici
+        await client.login(process.env.TOKEN);
+    } catch (error) {
+        logger.error(`Erreur lors de l'initialisation du client : ${error}`);
+    }
+})();
 
-loadHandlers().then(() => client.login(process.env.TOKEN));

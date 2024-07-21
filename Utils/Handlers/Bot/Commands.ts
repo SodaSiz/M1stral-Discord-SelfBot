@@ -1,5 +1,5 @@
-import type { ClientAttributes } from '../../Types/Client';
-import type { Command } from '../../Types/Command'
+import type { ClientAttributes } from '../../../Types/Client';
+import type { Command } from '../../../Types/Command'
 import { promisify } from 'util';
 import { glob } from 'glob';
 import path from 'path';
@@ -23,7 +23,7 @@ export default async (client: ClientAttributes) => {
     // Set the category for the command
     cmd.category = category;
 
-    if (!cmd.name || (!cmd.description && cmd.type !== 'USER')) 
+    if (!cmd.name || (!cmd.description && cmd.type !== 'USER'))
       return console.log(`\n⚠ ================\nCommande non chargée: ${!cmd.name ? 'Pas de nom' : 'Pas de description'} \nFichier --> ${cmdFile}\n⚠ ================\n\n`);
 
     if (cmd.args === true && !cmd.usage)

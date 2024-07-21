@@ -1,5 +1,4 @@
 import { Message } from 'discord.js-selfbot-v13';
-import { embed_var } from '../../Utils/Misc/Settings.json';
 import type {ClientAttributes} from '../../Types/Client';
 
 export default {
