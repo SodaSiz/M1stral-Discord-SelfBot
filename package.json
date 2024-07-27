@@ -12,11 +12,11 @@
     "ascii-table": "^0.0.9",
     "asciitable.js": "^2.0.1",
     "blagues-api": "^2.1.1",
-    "discord.js-selfbot-v13": "^3.1.4",
+    "discord.js-selfbot-v13": "^3.3.0",
     "dotenv": "^16.4.5",
     "figlet": "^1.7.0",
     "mongoose": "^8.4.3",
-    "node-fetch": "2",
+    "node-fetch": "^2.7.0",
     "promisify": "^0.0.3",
     "twilio": "^5.2.2",
     "winston": "^3.13.1"
