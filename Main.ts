@@ -22,7 +22,6 @@ const loadHandlers = async (handlers: string[]) => {
         }));
     } catch (error) {
         logger.error(`Erreur lors du chargement des handlers : ${error}`);
-        throw error;  // Re-throw l'erreur après l'avoir loggée
     }
 };
 

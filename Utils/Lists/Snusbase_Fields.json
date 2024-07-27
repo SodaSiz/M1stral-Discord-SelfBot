@@ -1,0 +1,58 @@
+{
+    "name": {
+        "label": "Nom & Prénom",
+        "type": "text"
+    },
+    "username": {
+        "label": "Nom d'utilisateur",
+        "type": "text"
+    },
+    "email": {
+        "label": "EMail",
+        "type": "text"
+    },
+    "lastip": {
+        "label": "IP",
+        "type": "text"
+    },
+    "country": {
+        "label": "Pays",
+        "type": "text"
+    },
+    "city": {
+        "label": "Ville",
+        "type": "text"
+    },
+    "gender": {
+        "label": "Genre",
+        "type": "text"
+    },
+    "created": {
+        "label": "Date de création",
+        "type": "text"
+    },
+    "followers": {
+        "label": "Nombre d'abonnés",
+        "type": "number"
+    },
+    "id": {
+        "label": "ID",
+        "type": "text"
+    },
+    "hash": {
+       "label": "Mot de passe hashé",
+        "type": "text"
+    },
+    "phone": {
+       "label": "Numéro de Téléphone",
+        "type": "text"
+    },
+    "password": {
+      "label": "Mot de passe",
+      "type": "text"
+    },
+    "host": {
+      "label": "Site Hôte",
+      "type": "text"
+    }
+}

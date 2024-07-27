@@ -1,89 +1,70 @@
-import { Message, MessageAttachment } from "discord.js-selfbot-v13";
-import { get_output_snusbase } from "../Core/Get_Output";
-import { make_json_snusbase } from "../Core/Requests/Make_JSON_File";
-import { splitJsonMessages } from "./Split_JSON_Messages"; // Assurez-vous que le chemin est correct
-import { JsonObject } from "../../Types/JSONObject";
+import { readFileSync } from "fs";
+import { resolve, join as pathjoin } from "path";
+import { FieldConfig, Data } from "../../Types/Snusbase"
+import { scanJSON } from "./JSON/Scan";
+import { formatExtractedInfo } from "./JSON/Format_Extract_Informations";
+import { send_request } from "../Core/Requests/Send_Request";
+import { Message, MessageAttachment } from "discord.js-selfbot-v13"
 import { Snusbase_Settings } from "../../Utils/Misc/Settings.json";
-import { log_figlet } from "../../Utils/Misc/ASCII/Figlet";
-import dotenv from "dotenv";
-import path from "path";
+import { make_json_snusbase } from "./JSON/Make_JSON_File";
+import { sendLongMessage } from "../../Utils/Functions/Send_Long_Messages";
+import logger from '../../Utils/Logger/Logger';
 
-dotenv.config(); // Charger les variables d'environnement
+const fieldConfig: FieldConfig = JSON.parse(readFileSync(resolve('Utils/Lists/Snusbase_Fields.json'), 'utf-8'));
 
-const outputDir = process.env.OUTPUT_RESULTS_DIRECTORY || "Snusbase/Results"; // Répertoire de sortie par défaut si non défini
+export async function snusbase_discord_messages(search: string, type: string, message: Message, api_url="data/search") {
+  let jsonData: { status: string, results: Data, errors: string };
 
-export async function snusbase_discord_messages(
-	search: string,
-	type: string,
-	message: Message,
-	other_api: string = "",
-) {
-	let results: string[];
-	switch (other_api) {
-		case "tools/hash-lookup": {
-			results = await get_output_snusbase(other_api, {
-				terms: [search],
-				types: [type],
-			});
-			break;
-		}
+  if (api_url == "tools/hash") {
+    jsonData = await send_request(api_url, {
+      types: "tools/hash",
+      terms: [search],
+    })
+  } else {
+    jsonData = await send_request(api_url, {
+      types: [type],
+      terms: [search],
+      wildcard: false
+    });
+  }
 
-		case "tools/ip-whois": {
-			results = await get_output_snusbase("tools/ip-whois", { terms: [search] });
-			break;
-		}
+  // Vérifier si une erreur a été rencontrée dans le résultat de l'API
+  if (jsonData.errors) {
+    return message.channel.send(`**Une erreur est survenue lors de la récupération des données dans la base de données de Snusbase.
+Vous avez probablement excedé le quota d'utilisation pour votre abonnement.**
+Détails :
+${jsonData.errors[0]}`)
+  }
 
-		default: {
-			results = await get_output_snusbase("data/search", {
-				terms: [search],
-				types: [type],
-				wildcard: false,
-			});
-			break;
-		}
-	}
+  // Accéder à la clé 'results' dans jsonData
 
-	// Vérifier s'il y a des résultats
-	if (
-		results[0].startsWith("Aucune information") ||
-		results[0].startsWith("**Une erreur")
-	) {
-		return await message.channel.send(
-			results[0] || "Aucune information trouvée.",
-		);
-	}
+  if (!jsonData.results)
+    return message.channel.send('Erreur lors de la récupération des données');
 
-	const combinedResult: JsonObject = {};
+  const extractedInfo = scanJSON(jsonData.results);
 
-	// Combiner tous les éléments JSON du tableau results
+  // Utiliser la fonction formatExtractedInfo pour formater le texte
+  const formattedInfo = formatExtractedInfo(extractedInfo, fieldConfig);
+  if (!formattedInfo.trim().length)
+    return message.channel.send("Aucune information trouvée.");
 
-	// Utiliser splitJsonMessages pour diviser les messages longs
-	for (const result of results) {
-		const splitMessages = splitJsonMessages(result, 11);
-		for (const msg of splitMessages) {
-			await message.channel.send(`\`\`\`json\n${msg}\n\`\`\``);
-		}
-	}
-
-	if (
+  sendLongMessage(message, formattedInfo);
+  if (
 		Snusbase_Settings.send_output_json &&
 		!Snusbase_Settings.save_output_json
 	) {
-		log_figlet("Warning");
-		return console.error(
+		return logger.warn(
 			"Vous ne pouvez pas envoyer le fichier avec les résultats Snusbase sans les sauvegarder !\nVeuillez changer la configuration pour autoriser la sauvegarde de vos requêtes ou refuser l'envoi du fichier.",
 		);
 	}
 
-	if (!Snusbase_Settings.save_output_json) return;
+  if (!Snusbase_Settings.send_output_json) return
+  if (!Snusbase_Settings.save_output_json) return
 
-	// Créer un fichier JSON avec les résultats combinés
-	await make_json_snusbase(outputDir, `${type}/${search}`, combinedResult);
+  await make_json_snusbase(process.env.OUTPUT_RESULTS_DIRECTORY || "Snusbase/results", `${type}/${search}`, jsonData); // Créer un fichier JSON avec les informations formatées
 
-	if (!Snusbase_Settings.send_output_json) return;
-
-	// Envoyer le fichier JSON en tant qu'attachement sur Discord
-	const attachmentPath = path.join(outputDir, type, `${search}.json`);
+  // Envoyer le fichier JSON en tant qu'attachement sur Discord
+	const attachmentPath = pathjoin(process.env.OUTPUT_RESULTS_DIRECTORY || "Snusbase/Results",  type, `${search}.json`);
 	const attachment = new MessageAttachment(attachmentPath);
 	return await message.channel.send({ files: [attachment] });
 }
