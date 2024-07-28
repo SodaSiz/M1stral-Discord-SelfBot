@@ -1,8 +1,11 @@
 import fetch from 'node-fetch';
 import 'dotenv/config';
+import { sendLongMessage } from "../../Utils/Functions/Send_Long_Messages";
+import { formatNazAPIResponse } from '../../Utils/Functions/Formatters/NazAPI';
+import logger from "../../Utils/Logger/logger";
 import type { JsonObject } from "../../Types/JSONObject";
-import type { ClientAttributes } from "../../Types/Client"; 
-import type { Message } from "discord.js-selfbot-v13"; 
+import type { ClientAttributes } from "../../Types/Client";
+import type { Message } from "discord.js-selfbot-v13";
 
 export default {
   name: "nazapi",
@@ -10,14 +13,11 @@ export default {
   usage: "<Recherche>",
   args: true,
   run: async (client: ClientAttributes, message: Message, args: string[]) => {
-    // Joindre les éléments du tableau args avec un espace
-    const request_id = args.join(' ');
-
     // Créer l'objet data avec les données nécessaires
     const data: JsonObject = {
       token: process.env.NAZAPI_TOKEN,
-      request: request_id,
-      limit: 75,
+      request: args.join(' '),
+      limit: 100,
       lang: 'fr'
     };
 
@@ -38,13 +38,15 @@ export default {
       }
 
       const responseData = await response.json();
-      console.log('Response:', responseData);
-      // Traitement de la réponse, par exemple, envoyer une réponse à l'utilisateur Discord
-      message.channel.send(`Réponse de l'API : ${responseData}`);
+
+      // Formater la réponse pour une meilleure lisibilité
+      const formattedResponse = formatNazAPIResponse(responseData);
+
+      // Utiliser sendLongMessage pour envoyer le message formaté
+      await sendLongMessage(message, formattedResponse);
     } catch (error) {
-      console.error('Erreur lors de la requête:', error);
+      logger.error('Erreur lors de la requête:', error);
       message.channel.send('Une erreur est survenue lors de la requête à l\'API.');
     }
   }
 };
-
