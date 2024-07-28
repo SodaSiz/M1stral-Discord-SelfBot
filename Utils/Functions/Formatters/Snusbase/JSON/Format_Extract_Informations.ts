@@ -1,4 +1,4 @@
-import type { ExtractedInfo, FieldConfig } from "../../../Types/Snusbase";
+import type { ExtractedInfo, FieldConfig } from "../../../../../Types/Snusbase";
 
 
 export function formatExtractedInfo(extractedInfo: ExtractedInfo, fieldConfig: FieldConfig): string {

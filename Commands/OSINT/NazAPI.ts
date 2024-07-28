@@ -1,8 +1,8 @@
-import fetch from 'node-fetch';
 import 'dotenv/config';
+import fetch from 'node-fetch';
+import logger from "../../Utils/Logger/Logger";
 import { sendLongMessage } from "../../Utils/Functions/Send_Long_Messages";
-import { formatNazAPIResponse } from '../../Utils/Functions/Formatters/NazAPI';
-import logger from "../../Utils/Logger/logger";
+import { formatNazAPIResponse } from '../../Utils/Functions/Formatters/NazAPI/NazAPI';
 import type { JsonObject } from "../../Types/JSONObject";
 import type { ClientAttributes } from "../../Types/Client";
 import type { Message } from "discord.js-selfbot-v13";

@@ -1,4 +1,4 @@
-import type { ExtractedInfo, FieldConfig, Data } from "../../../Types/Snusbase";
+import type { ExtractedInfo, FieldConfig, Data } from "../../../../../Types/Snusbase";
 import { readFileSync } from "fs";
 import { resolve } from 'path';
 
