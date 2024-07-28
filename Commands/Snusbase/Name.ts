@@ -1,6 +1,6 @@
 import type { Message } from "discord.js-selfbot-v13";
 import type { ClientAttributes } from "../../Types/Client";
-import { snusbase_discord_messages } from "../../Snusbase/Discord/Make_Message";
+import { snusbase_discord_messages } from '../../Utils/Functions/Formatters/Snusbase/Make_Message';
 
 export default {
 	name: "name",

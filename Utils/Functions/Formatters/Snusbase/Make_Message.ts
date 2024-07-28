@@ -1,14 +1,14 @@
 import { readFileSync } from "fs";
 import { resolve, join as pathjoin } from "path";
-import { FieldConfig, Data } from "../../Types/Snusbase"
+import { FieldConfig, Data } from "../../../../Types/Snusbase"
 import { scanJSON } from "./JSON/Scan";
 import { formatExtractedInfo } from "./JSON/Format_Extract_Informations";
-import { send_request } from "../Core/Requests/Send_Request";
+import { send_request } from "../../../../Snusbase/Core/Requests/Send_Request";
 import { Message, MessageAttachment } from "discord.js-selfbot-v13"
-import { Snusbase_Settings } from "../../Utils/Misc/Settings.json";
+import { Snusbase_Settings } from "../../../Misc/Settings.json";
 import { make_json_snusbase } from "./JSON/Make_JSON_File";
-import { sendLongMessage } from "../../Utils/Functions/Send_Long_Messages";
-import logger from '../../Utils/Logger/Logger';
+import { sendLongMessage } from "../../Send_Long_Messages";
+import logger from '../../../Logger/Logger';
 
 const fieldConfig: FieldConfig = JSON.parse(readFileSync(resolve('Utils/Lists/Snusbase_Fields.json'), 'utf-8'));
 
