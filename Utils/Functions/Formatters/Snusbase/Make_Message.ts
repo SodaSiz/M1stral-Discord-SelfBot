@@ -5,7 +5,7 @@ import { scanJSON } from "./JSON/Scan";
 import { formatExtractedInfo } from "./JSON/Format_Extract_Informations";
 import { send_request } from "../../../../Snusbase/Core/Requests/Send_Request";
 import { Message, MessageAttachment } from "discord.js-selfbot-v13"
-import { Snusbase_Settings } from "../../../Misc/Settings.json";
+import { Snusbase_Settings } from "../../../Misc/Settings/Snusbase/Snusbase.json";
 import { make_json_snusbase } from "./JSON/Make_JSON_File";
 import { sendLongMessage } from "../../Send_Long_Messages";
 import logger from '../../../Logger/Logger';
