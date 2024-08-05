@@ -47,7 +47,8 @@ const loadHandlers = async (handlers: string[]) => {
     await client.login(process.env.DISCORD_TOKEN);
     logger.info("Le client est connecté.");
 
-    // **TODO: Patcher les connections à MongoDB**
+
+    // TODO: Patcher les connections à MongoDB
     /*
     Telemetry_Connection();
     Logs_Connection();
