@@ -1,5 +1,6 @@
 .env
 node_modules
+.vscode/
 Utils/Misc/Settings/RPC/
 Utils/Misc/Settings/Bot/
 Utils/Misc/Settings/Snusbase/
