@@ -1,6 +1,7 @@
 export type FieldConfig = {
   [key: string]: {
     label: string;
+    showSource?: boolean;
   };
 };
 
@@ -26,5 +27,5 @@ export type UserInfo = {
 };
 
 export type ExtractedInfo = {
-  [key: string]: Map<string, { value: string, sources: string[] }[]>; // Utiliser Map pour stocker les valeurs et leurs sources
+  [key: string]: Map<string, { value: string; sources: string[] }[]>; // Utiliser Map pour stocker les valeurs et leurs sources
 };
