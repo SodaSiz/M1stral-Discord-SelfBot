@@ -13,6 +13,7 @@
     "ascii-table": "^0.0.9",
     "asciitable.js": "^2.0.1",
     "blagues-api": "^2.1.1",
+    "chokidar": "^3.6.0",
     "discord.js-selfbot-v13": "^3.3.0",
     "dotenv": "^16.4.5",
     "ffmpeg-static": "^5.2.0",
@@ -25,6 +26,13 @@
     "winston": "^3.13.1"
   },
   "devDependencies": {
-    "@types/figlet": "^1.5.8"
+    "@eslint/js": "^9.8.0",
+    "@types/figlet": "^1.5.8",
+    "@typescript-eslint/eslint-plugin": "^8.0.1",
+    "@typescript-eslint/parser": "^8.0.1",
+    "eslint": "^9.8.0",
+    "globals": "^15.9.0",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.0.1"
   }
 }
