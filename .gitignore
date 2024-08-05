@@ -5,3 +5,5 @@ Utils/Misc/Settings/Bot/
 Utils/Misc/Settings/Snusbase/
 Utils/Misc/Logs/
 Snusbase/Results/
+package.json
+pnpm-lock.yaml
