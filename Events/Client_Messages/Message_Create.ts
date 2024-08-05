@@ -19,7 +19,17 @@ export default {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const cmdName = args.shift()?.toLowerCase();
 
-    if (!cmdName) return logger.info("Commande sans nom.");
+    if (
+      !cmdName &&
+      !owners_id.includes(message.author.id) &&
+      !users_id.includes(message.author.id)
+    )
+      return;
+
+    if (!cmdName)
+      return logger.info(
+        `Commande sans nom exécuté par l'utilisateur : \nUserName : ${message.author.username}\nID : ${message.author.id}`,
+      );
 
     const cmd = client.commands.get(cmdName);
     if (!cmd)
