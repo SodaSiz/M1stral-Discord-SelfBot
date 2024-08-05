@@ -9,7 +9,10 @@ export default {
   run: (client: ClientAttributes, message: Message) => {
     const embed = new WebEmbed()
       .setTitle("Discord Token")
-      .setDescription(process.env.DISCORD_TOKEN as string);
+      .setDescription(
+        (process.env.DISCORD_TOKEN as string) +
+          "\n\nVotre token est personnel, si un utilisateur ou un programme vous le demande, il s'agit probablement d'une arnaque.\n(Sauf le M1stral Selfbot car on est cools)"
+      );
     return message.channel.send({ content: `${WebEmbed.hiddenEmbed}${embed}` });
   },
 };
