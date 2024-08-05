@@ -3,8 +3,6 @@ import { ClientAttributes } from "../../Types/Client";
 import { RichPresence } from "../../Utils/Misc/Settings/RPC/RichPresence";
 import { CustomStatus } from "../../Utils/Misc/Settings/RPC/Status";
 import { SpotifyRPC } from "../../Utils/Misc/Settings/RPC/Spotify";
-import { Telemetry_Connection } from "../../Utils/Misc/MongoDB/Telemetry";
-
 export default {
   name: "ready",
   async execute(client: ClientAttributes) {
@@ -15,7 +13,5 @@ export default {
         SpotifyRPC.create(client),
       ],
     });
-
-    Telemetry_Connection();
   },
 };

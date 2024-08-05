@@ -4,6 +4,10 @@ import "dotenv/config";
 import logger from "./Utils/Logger/Logger";
 import { attachErrorHandlers } from "./Utils/Handlers/Errors/Attach_On_Error";
 import { readStartupFile } from "./Utils/Misc/ASCII/Startup";
+/*
+import { Telemetry_Connection } from "./Utils/Misc/MongoDB/Telemetry/Telemetry";
+import { Logs_Connection } from "./Utils/Misc/MongoDB/Logs/Connection";
+*/
 
 // Création du client
 const client = new Client() as ClientAttributes;
@@ -42,6 +46,12 @@ const loadHandlers = async (handlers: string[]) => {
     // Connexion du client
     await client.login(process.env.DISCORD_TOKEN);
     logger.info("Le client est connecté.");
+
+    // **TODO: Patcher les connections à MongoDB**
+    /*
+    Telemetry_Connection();
+    Logs_Connection();
+    */
   } catch (error) {
     logger.error(`Erreur lors de l'initialisation du client : ${error}`);
   }

@@ -29,19 +29,23 @@
     },
     "created": {
         "label": "Date de création",
-        "type": "text"
+        "type": "text",
+        "showSource": true
     },
     "followers": {
         "label": "Nombre d'abonnés",
-        "type": "number"
+        "type": "number",
+        "showSource": true
     },
     "id": {
         "label": "ID",
-        "type": "text"
+        "type": "text",
+        "showSource": true
     },
     "hash": {
        "label": "Mot de passe hashé",
-        "type": "text"
+        "type": "text",
+        "showSource": true
     },
     "phone": {
        "label": "Numéro de Téléphone",
@@ -53,6 +57,7 @@
     },
     "host": {
       "label": "Site Hôte",
-      "type": "text"
+      "type": "text",
+      "showSource": true
     }
 }
