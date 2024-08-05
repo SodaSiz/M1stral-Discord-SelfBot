@@ -1,10 +1,13 @@
 .env
-node_modules
+package.json
+pnpm-lock.yaml
+
 .vscode/
+node_modules
+
 Utils/Misc/Settings/RPC/
 Utils/Misc/Settings/Bot/
 Utils/Misc/Settings/Snusbase/
 Utils/Misc/Logs/
+
 Snusbase/Results/
-package.json
-pnpm-lock.yaml
