@@ -41,8 +41,15 @@ export function tokenFormatter(user: JsonObject) {
       ? `**Couleur d'accentuation (Hex):** #${user.accentColor}\n`
       : ""
   }`;
-  formattedText += `**Autorisé à voir du contenu NSFW:** ${
-    user.nsfwAllowed ? `oui\n` : "non\n"
-  }`;
+  formattedText += `**Autorisé à voir du contenu NSFW:**
+    ${user.nsfwAllowed}`;
+
+  // French Replacement
+  // TODO: Translate to other language
+  formattedText.replace("true", "oui");
+  formattedText.replace("false", "non");
+  formattedText.replace("null", "aucun(e)");
+  formattedText.replace("undefined", "indéfini(e)");
+
   return formattedText;
 }
