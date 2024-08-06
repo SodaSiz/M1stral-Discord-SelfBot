@@ -19,51 +19,56 @@ export default {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const cmdName = args.shift()?.toLowerCase();
 
+    // Vérifier si l'utilisateur est autorisé avant toute autre action
     if (
-      !cmdName &&
       !owners_id.includes(message.author.id) &&
       !users_id.includes(message.author.id)
-    )
-      return;
-
-    if (!cmdName)
-      return logger.info(
-        `Commande sans nom exécuté par l'utilisateur : \nUserName : ${message.author.username}\nID : ${message.author.id}`,
+    ) {
+      logger.info(
+        `Tentative d'utilisation non autorisée par : \nUserName : ${message.author.username}\nID : ${message.author.id}`
       );
+      return; // Arrêter l'exécution ici si l'utilisateur n'est pas autorisé
+    }
+
+    // À partir d'ici, seuls les utilisateurs autorisés continuent
+
+    if (!cmdName) {
+      return logger.info(
+        `Commande sans nom exécutée par l'utilisateur : \nUserName : ${message.author.username}\nID : ${message.author.id}`
+      );
+    }
 
     const cmd = client.commands.get(cmdName);
-    if (!cmd)
+    if (!cmd) {
       return message.reply(
-        `**Cette commande n'existe pas !**\nPour obtenir la liste des commandes, veuillez executer la commande \`${prefix}help\``,
+        `**Cette commande n'existe pas !**\nPour obtenir la liste des commandes, veuillez exécuter la commande \`${prefix}help\``
       );
-    // Vérifier si l'auteur du message est un propriétaire ou un utilisateur autorisé
-    if (
-      !owners_id.includes(message.author.id) &&
-      !users_id.includes(message.author.id)
-    )
-      return logger.info("Utilisateur non autorisé");
+    }
 
     if (cmd.admin === true && !owners_id.includes(message.author.id)) {
       logger.warn(
-        `Commande exécuté par l'utilisateur refusée ( N'est pas dans la liste des membres autorisé. ) : \nUserName : ${message.author.username}\nID : ${message.author.id}`,
+        `Commande admin exécutée par un utilisateur non propriétaire : \nUserName : ${message.author.username}\nID : ${message.author.id}`
       );
       return message.reply(
-        "Cette commande est réservée aux utilisateurs propriétaires du SelfBot.",
+        "Cette commande est réservée aux utilisateurs propriétaires du SelfBot."
       );
     }
+
     if (cmd.args === true && !args.length) {
       logger.warn(
-        `Commande sans argument spécifier exécuté par l'utilisateur : \nUserName : ${message.author.username}\nID : ${message.author.id}`,
+        `Commande sans argument spécifié exécutée par l'utilisateur : \nUserName : ${message.author.username}\nID : ${message.author.id}`
       );
       return message.reply(
-        `**Vous devez spécifier des arguments pour votre commande !**\nPour plus de détails executez \`${prefix}help ${cmdName}\``,
+        `**Vous devez spécifier des arguments pour votre commande !**\nPour plus de détails exécutez \`${prefix}help ${cmdName}\``
       );
     }
+
     if (auto_delete_message === true && client.user?.id === message.author.id) {
       message.delete();
     }
+
     logger.info(
-      `Commande executé de l'utilisateur : \nUserName : ${message.author.username}\nID: ${message.author.id}`,
+      `Commande exécutée par l'utilisateur : \nUserName : ${message.author.username}\nID: ${message.author.id}`
     );
     cmd.run(client, message, args);
   },
