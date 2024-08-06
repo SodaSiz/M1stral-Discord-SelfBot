@@ -1,50 +1,7 @@
-import fetch from 'node-fetch';
-import { ClientAttributes } from '../../Types/Client';
-import { Message } from 'discord.js-selfbot-v13';
-
-class DiscordTokenInfo {
-  token: string;
-  headers: { Authorization: string };
-
-  constructor(token: string) {
-    this.token = token;
-    try {
-      this.headers = { Authorization: `Bot ${this.token}` };
-    } catch (err) {
-      this.headers = { Authorization: `Bearer ${this.token}` };
-    }
-  }
-
-  async getUserInfo() {
-    return this.fetchData('https://discord.com/api/v10/users/@me');
-  }
-
-  async getGuilds() {
-    return this.fetchData('https://discord.com/api/v10/users/@me/guilds');
-  }
-
-  async getDMs() {
-    return this.fetchData('https://discord.com/api/v10/users/@me/channels');
-  }
-
-  private async fetchData(url: string) {
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: this.headers,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status} ${response.statusText}`);
-      }
-
-      return response.json();
-    } catch (error) {
-      console.error(`Failed to fetch data from ${url}:`, error);
-      return null;
-    }
-  }
-}
+import { ClientAttributes } from "../../Types/Client";
+import { Message } from "discord.js-selfbot-v13";
+import { sendLongMessage } from "../../Utils/Functions/Send_Long_Messages";
+import { tokenFormatter } from "../../Utils/Functions/Formatters/Token_Lookup/Token_Lookup";
 
 export default {
   name: "tokenlookup",
@@ -52,16 +9,14 @@ export default {
   usage: "<Token d'authentification Discord>",
   args: true,
   run: async (client: ClientAttributes, message: Message, args: string[]) => {
+    // Get the token from the args
     const token = args[0];
-    const discordInfo = new DiscordTokenInfo(token);
 
-    const userInfo = await discordInfo.getUserInfo();
-    console.log('User Info:', userInfo);
+    // Log to the token
+    client.login(token);
+    // Fetch the user info
+    const user = await client.users.fetch(client.user?.id as string);
 
-    const guilds = await discordInfo.getGuilds();
-    console.log('Guilds:', guilds);
-
-    const dms = await discordInfo.getDMs();
-    console.log('DMs:', dms);
-  }
-}
+    sendLongMessage(message, tokenFormatter(user));
+  },
+};
