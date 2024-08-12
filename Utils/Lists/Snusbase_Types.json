@@ -1,4 +1,5 @@
 {
-	"snusbase_types": ["email", "name", "password", "lastip"],
-	"other_url": ["ip-whois", "hash-lookup"]
+  "snusbase_types": ["email", "name", "password", "lastip", "hash"],
+  "other_types": [],
+  "other_url": {}
 }
