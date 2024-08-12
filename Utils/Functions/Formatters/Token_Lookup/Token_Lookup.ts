@@ -1,55 +1,45 @@
 import type { JsonObject } from "../../../../Types/JSONObject";
 
+function formatValue(value: any): string {
+  if (value === true) return "oui";
+  if (value === false) return "non";
+  if (value === null) return "aucun(e)";
+  return String(value);
+}
+
 export function tokenFormatter(user: JsonObject) {
-  let formattedText = `**Nom d'utilisateur:** ${user.globalName}\n`;
-  formattedText += `**Arobase:** ${user.username}\n`;
-  formattedText += `**ID:** ${user.id}\n`;
-  formattedText += `**Avatar:** \`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.jpeg\`\n`;
-  formattedText += `${
-    user.clanTag ? `**Clan (HypeSquad):** ${user.clanTag}\n` : ""
-  }`;
-  formattedText += `${user.email ? `**Email:** ${user.email}\n` : ""}`;
-  formattedText += `${user.phone ? `**Phone:** ${user.phone}\n` : ""}`;
-  formattedText += `${user.bio ? `**Bio:** ${user.bio}\n` : ""}`;
-  formattedText += `${
-    user.discriminator != 0
-      ? `**Discriminator (Anciennement "Tag"):** ${user.discriminator}\n`
-      : ""
-  }`;
-  formattedText += `${
-    user.premiumType ? `**Niveau du premium:** ${user.premiumType}\n` : ""
-  }`;
-  formattedText += `${
-    user.publicFlags ? `**Flags publique:** ${user.publicFlags}\n` : ""
-  }`;
-  formattedText += `${user.locale ? `**Locale:** ${user.locale}\n` : ""}`;
-  formattedText += `${
-    user.mfaEnabled ? `**MFA Enabled:** ${user.mfaEnabled}\n` : ""
-  }`;
-  formattedText += `${user.verified ? `**Verified:** ${user.verified}\n` : ""}`;
-  formattedText += `${
-    user.avatarDecoration ? `**Décoration:** ${user.avatarDecoration}\n` : ""
-  }`;
-  formattedText += `${user.banner ? `**Bannière:** ${user.banner}\n` : ""}`;
-  formattedText += `${
-    user.bannerColor
-      ? `**Couleur de bannière (Hex):** ${user.bannerColor}\n`
-      : ""
-  }`;
-  formattedText += `${
-    user.accentColor
-      ? `**Couleur d'accentuation (Hex):** #${user.accentColor}\n`
-      : ""
-  }`;
-  formattedText += `**Autorisé à voir du contenu NSFW:**
-    ${user.nsfwAllowed}`;
+  const fields = [
+    { name: "Nom d'utilisateur", value: user.globalName },
+    { name: "Arobase", value: user.username },
+    { name: "ID", value: user.id },
+    {
+      name: "Avatar",
+      value: user.avatar
+        ? `\`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.jpeg\``
+        : undefined,
+    },
+    { name: "Clan (HypeSquad)", value: user.clanTag },
+    { name: "Email", value: user.email },
+    { name: "EMail verifié", value: user.verified },
+    { name: "Phone", value: user.phone },
+    { name: "Bio", value: user.bio },
+    { name: 'Discriminator (Anciennement "Tag")', value: user.discriminator },
+    { name: "Niveau du premium", value: user.premiumType },
+    { name: "Flags publique", value: user.publicFlags },
+    { name: "Locale", value: user.locale },
+    { name: "Double authentification activée", value: user.mfaEnabled },
+    { name: "Décoration", value: user.avatarDecoration },
+    { name: "Bannière", value: user.banner },
+    { name: "Couleur de bannière (Hex)", value: user.bannerColor },
+    {
+      name: "Couleur d'accentuation (Hex)",
+      value: user.accentColor ? `#${user.accentColor}` : undefined,
+    },
+    { name: "Autorisé à voir du contenu NSFW", value: user.nsfwAllowed },
+  ];
 
-  // French Replacement
-  // TODO: Translate to other language
-  formattedText.replace("true", "oui");
-  formattedText.replace("false", "non");
-  formattedText.replace("null", "aucun(e)");
-  formattedText.replace("undefined", "indéfini(e)");
-
-  return formattedText;
+  return fields
+    .filter((field) => field.value !== undefined)
+    .map((field) => `**${field.name}:** ${formatValue(field.value)}`)
+    .join("\n");
 }
