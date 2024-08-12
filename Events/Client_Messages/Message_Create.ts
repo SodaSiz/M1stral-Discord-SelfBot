@@ -8,6 +8,8 @@ import type { ClientAttributes } from "../../Types/Client";
 import { Message } from "discord.js-selfbot-v13";
 import "dotenv/config";
 import logger from "../../Utils/Logger/Logger";
+import { embed_error } from "../../Utils/Functions/Embeds/Error";
+import { embed_warning } from "../../Utils/Functions/Embeds/Warning";
 
 export default {
   name: "messageCreate",
@@ -40,8 +42,9 @@ export default {
 
     const cmd = client.commands.get(cmdName);
     if (!cmd) {
-      return message.reply(
-        `**Cette commande n'existe pas !**\nPour obtenir la liste des commandes, veuillez exécuter la commande \`${prefix}help\``
+      return embed_error(
+        message,
+        `Cette commande n'existe pas !\nPour obtenir la liste des commandes, veuillez exécuter la commande \`${prefix}help\``
       );
     }
 
@@ -49,7 +52,9 @@ export default {
       logger.warn(
         `Commande admin exécutée par un utilisateur non propriétaire : \nUserName : ${message.author.username}\nID : ${message.author.id}`
       );
-      return message.reply(
+      return embed_warning(
+        message,
+        "Commande non autorisée.",
         "Cette commande est réservée aux utilisateurs propriétaires du SelfBot."
       );
     }
@@ -58,8 +63,10 @@ export default {
       logger.warn(
         `Commande sans argument spécifié exécutée par l'utilisateur : \nUserName : ${message.author.username}\nID : ${message.author.id}`
       );
-      return message.reply(
-        `**Vous devez spécifier des arguments pour votre commande !**\nPour plus de détails exécutez \`${prefix}help ${cmdName}\``
+      return embed_warning(
+        message,
+        "Commande sans argument.",
+        `Vous devez spécifier des arguments pour votre commande !\nPour plus de détails exécutez \`${prefix}help ${cmdName}\``
       );
     }
 
