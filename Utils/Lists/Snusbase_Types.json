@@ -1,5 +1,5 @@
 {
-  "snusbase_types": ["email", "name", "password", "lastip", "hash"],
+  "snusbase_types": ["username", "email", "lastip", "hash", "password", "name"],
   "other_types": [],
   "other_url": {}
 }
