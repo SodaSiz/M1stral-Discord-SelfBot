@@ -1,8 +1,8 @@
 import { Message } from "discord.js-selfbot-v13";
 import { ClientAttributes } from "../../Types/Client";
-import { prefix } from "../../Utils/Misc/Settings/Bot/Bot.json";
-import { embed_error } from "../../Utils/Functions/Embeds/Error";
-import { embed } from "../../Utils/Functions/Embeds/Default";
+import { prefix } from "../../user-data/Settings/Bot/Bot.json";
+import { embed_error } from "../../Components/Embeds/Error";
+import { embed } from "../../Components/Embeds/Default";
 
 export default {
   name: "help",

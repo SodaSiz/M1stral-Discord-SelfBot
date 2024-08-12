@@ -2,8 +2,8 @@ import { Watch_Logs } from "./Watch";
 import { connection } from "mongoose";
 import { ConnectDB } from "./Connect";
 import { Upload_Logs } from "./Upload";
-import { Logs_Files } from "../../../Lists/Logs_Files.json";
-import logger from "../../../Logger/Logger";
+import { Logs_Files } from "../../../Constants/Logs_Files.json";
+import logger from "../../../../Components/Logger/Logger";
 
 export async function Logs_Connection() {
   await ConnectDB();

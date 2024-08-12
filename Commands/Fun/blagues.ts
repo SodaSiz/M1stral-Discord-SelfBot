@@ -1,7 +1,7 @@
 import "dotenv/config";
 import BlaguesAPI from "blagues-api";
-import blagues_lists from "../../Utils/Lists/Blagues_API.json";
-import { prefix } from "../../Utils/Misc/Settings/Bot/Bot.json";
+import blagues_lists from "../../Utils/Constants/Blagues_API.json";
+import { prefix } from "../../user-data/Settings/Bot/Bot.json";
 import { ClientAttributes } from "../../Types/Client";
 import { Message } from "discord.js-selfbot-v13";
 import { Categories, JokeResponse } from "blagues-api/dist/types/types";

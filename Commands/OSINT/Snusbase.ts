@@ -1,13 +1,13 @@
-import { snusbase_discord_messages } from "../../Utils/Functions/Formatters/Snusbase/Make_Message";
+import { snusbase_discord_messages } from "../../Components/Formatters/Snusbase/Make_Message";
 import {
   snusbase_types,
   other_types,
   //other_url,
-} from "../../Utils/Lists/Snusbase_Types.json";
+} from "../../Utils/Constants/Snusbase_Types.json";
 import { Message } from "discord.js-selfbot-v13";
 import type { ClientAttributes } from "../../Types/Client";
-import { embed_error } from "../../Utils/Functions/Embeds/Error";
-import { prefix } from "../../Utils/Misc/Settings/Bot/Bot.json";
+import { embed_error } from "../../Components/Embeds/Error";
+import { prefix } from "../../user-data/Settings/Bot/Bot.json";
 
 export default {
   name: "snusbase",

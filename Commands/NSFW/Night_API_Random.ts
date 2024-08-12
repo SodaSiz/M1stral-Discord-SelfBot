@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import logger from "../../Utils/Logger/Logger";
+import logger from "../../Components/Logger/Logger";
 import "dotenv/config";
 import type { ClientAttributes } from "../../Types/Client";
 import {

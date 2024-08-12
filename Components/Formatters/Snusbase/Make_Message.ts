@@ -1,19 +1,19 @@
 import { readFileSync } from "fs";
 import { resolve, join as pathjoin } from "path";
-import { FieldConfig, Data } from "../../../../Types/Snusbase";
-import { scanJSON } from "./JSON/Scan";
-import { formatExtractedInfo } from "./JSON/Format_Extract_Informations";
-import { send_request } from "../../../../Snusbase/Core/Requests/Send_Request";
+import { FieldConfig, Data } from "../../../Types/Snusbase";
+import { scanJSON } from "../../../Services/Snusbase/JSON/Scan";
+import { formatExtractedInfo } from "../../../Services/Snusbase/JSON/Format_Extract_Informations";
+import { send_request } from "../../../Services/Snusbase/Core/Requests/Send_Request";
 import { Message, MessageAttachment } from "discord.js-selfbot-v13";
-import { Snusbase_Settings } from "../../../Misc/Settings/Snusbase/Snusbase.json";
-import { make_json_snusbase } from "./JSON/Make_JSON_File";
-import { sendLongMessage } from "../../Send_Long_Messages";
+import { Snusbase_Settings } from "../../../user-data/Settings/Snusbase/Snusbase.json";
+import { make_json_snusbase } from "../../../Services/Snusbase/JSON/Make_JSON_File";
+import { sendLongMessage } from "../../Messages/Send_Long_Messages";
 import { embed_error } from "../../Embeds/Error";
 import { embed } from "../../Embeds/Default";
-import logger from "../../../Logger/Logger";
+import logger from "../../Logger/Logger";
 
 const fieldConfig: FieldConfig = JSON.parse(
-  readFileSync(resolve("Utils/Lists/Snusbase_Fields.json"), "utf-8")
+  readFileSync(resolve("Utils/Constants/Snusbase_Fields.json"), "utf-8")
 );
 
 export async function snusbase_discord_messages(

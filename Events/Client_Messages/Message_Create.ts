@@ -3,13 +3,13 @@ import {
   auto_delete_message,
   owners_id,
   users_id,
-} from "../../Utils/Misc/Settings/Bot/Bot.json";
+} from "../../user-data/Settings/Bot/Bot.json";
 import type { ClientAttributes } from "../../Types/Client";
 import { Message } from "discord.js-selfbot-v13";
 import "dotenv/config";
-import logger from "../../Utils/Logger/Logger";
-import { embed_error } from "../../Utils/Functions/Embeds/Error";
-import { embed_warning } from "../../Utils/Functions/Embeds/Warning";
+import logger from "../../Components/Logger/Logger";
+import { embed_error } from "../../Components/Embeds/Error";
+import { embed_warning } from "../../Components/Embeds/Warning";
 
 export default {
   name: "messageCreate",

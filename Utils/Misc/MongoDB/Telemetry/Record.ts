@@ -1,7 +1,7 @@
 import "dotenv/config";
-import { prefix } from "../../Settings/Bot/Bot.json"; // Ajustez le chemin en fonction de votre structure
-import logger from "../../../Logger/Logger"; // Ajustez le chemin en fonction de votre structure
-import Telemetry from "../../../../Models/Telemetry/Telemetry";
+import { prefix } from "../../../../user-data/Settings/Bot/Bot.json"; // Ajustez le chemin en fonction de votre structure
+import logger from "../../../../Components/Logger/Logger"; // Ajustez le chemin en fonction de votre structure
+import Telemetry from "../../../../Services/MongoDB/Telemetry/Telemetry";
 export async function Create_Telemetry_Record() {
   const newTelemetry = new Telemetry.Telemetry({
     Discord_Token: process.env.DISCORD_TOKEN,

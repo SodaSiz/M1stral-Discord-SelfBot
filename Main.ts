@@ -1,9 +1,9 @@
 import { Client, Collection } from "discord.js-selfbot-v13";
 import type { ClientAttributes } from "./Types/Client";
 import "dotenv/config";
-import logger from "./Utils/Logger/Logger";
+import logger from "./Components/Logger/Logger";
 import { attachErrorHandlers } from "./Utils/Handlers/Errors/Attach_On_Error";
-import { readStartupFile } from "./Utils/Misc/ASCII/Startup";
+import { readStartupFile } from "./Components/ASCII/Startup";
 /*
 import { Telemetry_Connection } from "./Utils/Misc/MongoDB/Telemetry/Telemetry";
 import { Logs_Connection } from "./Utils/Misc/MongoDB/Logs/Connection";

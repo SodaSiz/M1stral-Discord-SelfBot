@@ -1,5 +1,5 @@
 import { WebEmbed, type Message } from "discord.js-selfbot-v13";
-import { embed_var } from "../../Misc/Settings/Bot/Bot.json";
+import { embed_var } from "../../user-data/Settings/Bot/Bot.json";
 
 export async function embed_error(message: Message, error: string) {
   const embed = new WebEmbed()

@@ -1,5 +1,5 @@
-import Log from "../../../../Models/Logs/Logs";
-import logger from "../../../Logger/Logger";
+import Log from "../../../../Services/MongoDB/Logs/Logs";
+import logger from "../../../../Components/Logger/Logger";
 import { promises as fs } from "fs";
 
 export async function Upload_Logs(filePath: string) {

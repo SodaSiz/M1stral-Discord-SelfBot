@@ -1,4 +1,4 @@
-import type { JsonObject } from "../../../../Types/JSONObject";
+import type { JsonObject } from "../../../Types/JSONObject";
 
 function formatValue(value: any): string {
   if (value === true) return "oui";

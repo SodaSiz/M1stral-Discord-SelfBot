@@ -1,7 +1,7 @@
-import logger from "../../../Logger/Logger"; // Ajustez le chemin en fonction de votre structure
+import logger from "../../../../Components/Logger/Logger"; // Ajustez le chemin en fonction de votre structure
 import { Database_Connection } from "./Connection";
 import { Create_Telemetry_Record } from "./Record";
-import { MongoDB_Settings } from "../../Settings/MongoDB/MongoDB.json"; // Ajustez le chemin en fonction de votre structure
+import { MongoDB_Settings } from "../../../../user-data/Settings/MongoDB/MongoDB.json"; // Ajustez le chemin en fonction de votre structure
 
 export async function Telemetry_Connection() {
   if (!process.env.MongoDB_URI)

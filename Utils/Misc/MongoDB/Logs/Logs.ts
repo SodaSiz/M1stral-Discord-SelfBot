@@ -1,10 +1,10 @@
 import { connection } from "mongoose";
-import logger from "../../../Logger/Logger";
+import logger from "../../../../Components/Logger/Logger";
 import "dotenv/config";
 import { ConnectDB } from "./Connect";
 import { Watch_Logs } from "./Watch";
 import { Upload_Logs } from "./Upload";
-import { Logs_Files } from "../../../Lists/Logs_Files.json";
+import { Logs_Files } from "../../../Constants/Logs_Files.json";
 (async () => {
   await ConnectDB();
   // Exécution du script

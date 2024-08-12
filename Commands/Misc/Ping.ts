@@ -1,6 +1,6 @@
 import { type Message } from "discord.js-selfbot-v13";
 import type { ClientAttributes } from "../../Types/Client";
-import { embed } from "../../Utils/Functions/Embeds/Default";
+import { embed } from "../../Components/Embeds/Default";
 
 export default {
   name: "ping",

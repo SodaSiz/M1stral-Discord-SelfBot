@@ -1,8 +1,8 @@
 import "dotenv/config";
 import { ClientAttributes } from "../../Types/Client";
-import { RichPresence } from "../../Utils/Misc/Settings/RPC/RichPresence";
-import { CustomStatus } from "../../Utils/Misc/Settings/RPC/Status";
-import { SpotifyRPC } from "../../Utils/Misc/Settings/RPC/Spotify";
+import { RichPresence } from "../../user-data/Settings/RPC/RichPresence";
+import { CustomStatus } from "../../user-data/Settings/RPC/Status";
+import { SpotifyRPC } from "../../user-data/Settings/RPC/Spotify";
 export default {
   name: "ready",
   async execute(client: ClientAttributes) {

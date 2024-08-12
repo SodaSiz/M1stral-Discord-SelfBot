@@ -1,13 +1,13 @@
 import "dotenv/config";
 import fetch from "node-fetch";
-import logger from "../../Utils/Logger/Logger";
-import { sendLongMessage } from "../../Utils/Functions/Send_Long_Messages";
-import { formatNazAPIResponse } from "../../Utils/Functions/Formatters/NazAPI/NazAPI";
+import logger from "../../Components/Logger/Logger";
+import { sendLongMessage } from "../../Components/Messages/Send_Long_Messages";
+import { formatNazAPIResponse } from "../../Components/Formatters/NazAPI/NazAPI";
 import type { JsonObject } from "../../Types/JSONObject";
 import type { ClientAttributes } from "../../Types/Client";
 import { WebEmbed, type Message } from "discord.js-selfbot-v13";
-import { embed_error } from "../../Utils/Functions/Embeds/Error";
-import { embed_warning } from "../../Utils/Functions/Embeds/Warning";
+import { embed_error } from "../../Components/Embeds/Error";
+import { embed_warning } from "../../Components/Embeds/Warning";
 
 export default {
   name: "nazapi",

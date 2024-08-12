@@ -1,14 +1,14 @@
 import fetch from "node-fetch";
 import "dotenv/config";
-import { nsfw_types } from "../../Utils/Lists/NSFW_Types.json";
+import { nsfw_types } from "../../Utils/Constants/NSFW_Types.json";
 import type { ClientAttributes } from "../../Types/Client";
 import {
   DiscordAPIError,
   type Message,
   type TextChannel,
 } from "discord.js-selfbot-v13";
-import logger from "../../Utils/Logger/Logger";
-import { prefix } from "../../Utils/Misc/Settings/Bot/Bot.json";
+import logger from "../../Components/Logger/Logger";
+import { prefix } from "../../user-data/Settings/Bot/Bot.json";
 
 export default {
   name: "nsfw",

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import logger from "../../../Logger/Logger"; // Ajustez le chemin en fonction de votre structure
+import logger from "../../../../Components/Logger/Logger"; // Ajustez le chemin en fonction de votre structure
 
 export async function Database_Connection() {
   logger.info("Connection à la base de données");

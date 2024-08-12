@@ -2,7 +2,7 @@ import { Client } from 'discord.js-selfbot-v13';
 import { promises as fs } from 'fs';
 import { basename, dirname, join } from 'path';
 import AsciiTable from 'ascii-table';
-import { eventsList } from '../../Lists/Events.json';
+import { eventsList } from '../../Constants/Events.json';
 
 // Table pour afficher les événements
 const table = new AsciiTable('Évenements');

@@ -1,4 +1,4 @@
-import type { JsonObject } from "../../../../Types/JSONObject";
+import type { JsonObject } from "../../../Types/JSONObject";
 
 export function formatNazAPIResponse(data: JsonObject): string {
   let formattedText = `**Nombre de résultats:** ${data.NumOfResults}\n`;
@@ -18,10 +18,10 @@ export function formatNazAPIResponse(data: JsonObject): string {
       for (const key in entry) {
         formattedText += `- **${key}:** ${entry[key]}\n`;
       }
-      formattedText += '\n';
+      formattedText += "\n";
     });
 
-    formattedText += '\n';
+    formattedText += "\n";
   }
 
   return formattedText;

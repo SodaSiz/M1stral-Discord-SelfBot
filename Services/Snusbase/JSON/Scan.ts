@@ -1,14 +1,10 @@
-import type {
-  ExtractedInfo,
-  FieldConfig,
-  Data,
-} from "../../../../../Types/Snusbase";
+import type { ExtractedInfo, FieldConfig, Data } from "../../../Types/Snusbase";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 
 // Lire la configuration des champs à partir du fichier JSON
 const fieldConfig: FieldConfig = JSON.parse(
-  readFileSync(resolve("Utils/Lists/Snusbase_Fields.json"), "utf-8"),
+  readFileSync(resolve("Utils/Constants/Snusbase_Fields.json"), "utf-8")
 );
 
 export function scanJSON(data: Data): ExtractedInfo {
@@ -45,7 +41,7 @@ export function scanJSON(data: Data): ExtractedInfo {
                   extractedInfo[field].get(normalizedValue);
                 if (existingEntries) {
                   const existingEntry = existingEntries.find((entry) =>
-                    entry.sources.includes(key),
+                    entry.sources.includes(key)
                   );
                   if (!existingEntry) {
                     existingEntries.push({ value, sources: [key] });

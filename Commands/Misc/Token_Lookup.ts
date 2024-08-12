@@ -1,7 +1,7 @@
 import { ClientAttributes } from "../../Types/Client";
 import { Message } from "discord.js-selfbot-v13";
-import { sendLongMessage } from "../../Utils/Functions/Send_Long_Messages";
-import { tokenFormatter } from "../../Utils/Functions/Formatters/Token_Lookup/Token_Lookup";
+import { sendLongMessage } from "../../Components/Messages/Send_Long_Messages";
+import { tokenFormatter } from "../../Components/Formatters/Token_Lookup/Token_Lookup";
 
 export default {
   name: "tokenlookup",

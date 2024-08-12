@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { ILogs } from "../../Types/Logs";
+import { ILogs } from "@types/Logs";
 
 const LogSchema = new Schema<ILogs>({
   Filename: { type: String, required: true },

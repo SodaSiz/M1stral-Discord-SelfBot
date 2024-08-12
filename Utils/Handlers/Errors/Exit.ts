@@ -1,5 +1,5 @@
-import logger from '../../Logger/Logger';
-import { log_figlet } from '../../Misc/ASCII/Figlet';
+import logger from '../../../Components/Logger/Logger';
+import { log_figlet } from '../../../Components/ASCII/Figlet';
 
 export const exitHandler = (code: number) => {
     logger.info(`Le processus s'est arrêté avec le code ${code}`);
