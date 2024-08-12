@@ -18,29 +18,36 @@ export default {
   args: true,
   run: async (client: ClientAttributes, message: Message, args: string[]) => {
     // Uncomment the other_types if you want to use the other_types
+    // Vérifie si l'argument est un type de recherche
     if (
-      !snusbase_types.includes(args[0]) /* && !other_types.includes(args[0])*/
-    )
-      return embed_error(
-        message,
-        `La recherche doit être un type de recherche valide.\nPour plus d'information sur la commande, veuillez tapper ${prefix}help snusbase`
-      );
-
-    if (!args[1])
-      return embed_error(
-        message,
-        `Vous devez spécifier une recherche.\nPour plus d'information sur la commande, veuillez tapper ${prefix}help snusbase`
-      );
-    /*
+      snusbase_types.includes(args[0]) /* && !other_types.includes(args[0])*/
+    ) {
+      if (!args[1])
+        return embed_error(
+          message,
+          `Vous devez spécifier une recherche.\nPour plus d'information sur la commande, veuillez tapper ${prefix}help snusbase`
+        );
+      /*
     if (other_types.includes(args[0]))
       return snusbase_discord_messages(
         args.slice(1).join(" "),
         args[0],
         message,
+        args[0],
         other_url[args[0]]
       );
       
     else */
-    snusbase_discord_messages(args.slice(1).join(" "), args[0], message);
+      //
+      snusbase_discord_messages(
+        args.slice(1).join(" "),
+        [args[0]],
+        message,
+        args[0]
+      );
+    } else {
+      // Recherche globale
+      snusbase_discord_messages(args.join(" "), snusbase_types, message);
+    }
   },
 };
