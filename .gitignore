@@ -3,6 +3,7 @@
 .vscode/
 node_modules
 eslint.config.mjs
+.eslintrc
 
 Utils/Misc/Settings/*
 Utils/Misc/Logs/*
