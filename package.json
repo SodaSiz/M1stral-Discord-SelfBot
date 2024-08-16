@@ -9,6 +9,7 @@
     "@distube/ytdl-core": "^4.14.3",
     "@everapi/numlookupapi-js": "^1.0.2",
     "@pnpm/fetch": "^8.0.3",
+    "@supabase/supabase-js": "^2.45.1",
     "@types/glob": "^8.1.0",
     "@types/node-fetch": "^2.6.11",
     "ascii-table": "^0.0.9",
