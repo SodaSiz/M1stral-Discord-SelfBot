@@ -8,8 +8,7 @@ import type { ClientAttributes } from "../../Types/Client";
 import { Message } from "discord.js-selfbot-v13";
 import "dotenv/config";
 import logger from "../../Components/Logger/Logger";
-import { embed_error } from "../../Components/Embeds/Error";
-import { embed_warning } from "../../Components/Embeds/Warning";
+import { EmbedBuilder } from "../../Components/Embeds/Builder";
 
 export default {
   name: "messageCreate",
@@ -27,7 +26,7 @@ export default {
       !users_id.includes(message.author.id)
     ) {
       logger.info(
-        `Tentative d'utilisation non autorisée par : \nUserName : ${message.author.username}\nID : ${message.author.id}`
+        `Tentative d'utilisation non autorisée par : \nUserName : ${message.author.username}\nID : ${message.author.id}`,
       );
       return; // Arrêter l'exécution ici si l'utilisateur n'est pas autorisé
     }
@@ -36,38 +35,37 @@ export default {
 
     if (!cmdName) {
       return logger.info(
-        `Commande sans nom exécutée par l'utilisateur : \nUserName : ${message.author.username}\nID : ${message.author.id}`
+        `Commande sans nom exécutée par l'utilisateur : \nUserName : ${message.author.username}\nID : ${message.author.id}`,
       );
     }
 
     const cmd = client.commands.get(cmdName);
     if (!cmd) {
-      return embed_error(
-        message,
-        `Cette commande n'existe pas !\nPour obtenir la liste des commandes, veuillez exécuter la commande \`${prefix}help\``
-      );
+      const embed = new EmbedBuilder.Error({
+        description: `Cette commande n'existe pas !\nPour obtenir la liste des commandes, veuillez exécuter la commande \`${prefix}help\``,
+      });
+      return message.channel.send({ content: embed.toString() });
     }
 
     if (cmd.admin === true && !owners_id.includes(message.author.id)) {
       logger.warn(
-        `Commande admin exécutée par un utilisateur non propriétaire : \nUserName : ${message.author.username}\nID : ${message.author.id}`
+        `Commande admin exécutée par un utilisateur non propriétaire : \nUserName : ${message.author.username}\nID : ${message.author.id}`,
       );
-      return embed_warning(
-        message,
-        "Commande non autorisée.",
-        "Cette commande est réservée aux utilisateurs propriétaires du SelfBot."
-      );
+      const embed = new EmbedBuilder.Warning({
+        description:
+          "Cette commande est réservée aux utilisateurs propriétaires du SelfBot.",
+      });
+      return message.channel.send({ content: embed.toString() });
     }
 
     if (cmd.args === true && !args.length) {
       logger.warn(
-        `Commande sans argument spécifié exécutée par l'utilisateur : \nUserName : ${message.author.username}\nID : ${message.author.id}`
+        `Commande sans argument spécifié exécutée par l'utilisateur : \nUserName : ${message.author.username}\nID : ${message.author.id}`,
       );
-      return embed_warning(
-        message,
-        "Commande sans argument.",
-        `Vous devez spécifier des arguments pour votre commande !\nPour plus de détails exécutez \`${prefix}help ${cmdName}\``
-      );
+      const embed = new EmbedBuilder.Warning({
+        description: "Vous devez spécifier des arguments pour votre commande !",
+      });
+      return message.channel.send({ content: embed.toString() });
     }
 
     if (auto_delete_message === true && client.user?.id === message.author.id) {
@@ -75,7 +73,7 @@ export default {
     }
 
     logger.info(
-      `Commande exécutée par l'utilisateur : \nUserName : ${message.author.username}\nID: ${message.author.id}`
+      `Commande exécutée par l'utilisateur : \nUserName : ${message.author.username}\nID: ${message.author.id}`,
     );
     cmd.run(client, message, args);
   },

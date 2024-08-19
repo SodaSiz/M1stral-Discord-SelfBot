@@ -5,7 +5,8 @@ import { sendLongMessage } from "../../Components/Messages/Send_Long_Messages";
 import { formatNazAPIResponse } from "../../Components/Formatters/NazAPI/NazAPI";
 import type { JsonObject } from "../../Types/JSONObject";
 import type { ClientAttributes } from "../../Types/Client";
-import { WebEmbed, type Message } from "discord.js-selfbot-v13";
+import { type Message } from "discord.js-selfbot-v13";
+import { EmbedBuilder } from "../../Components/Embeds/Builder";
 import { embed_error } from "../../Components/Embeds/Error";
 import { embed_warning } from "../../Components/Embeds/Warning";
 
@@ -42,18 +43,19 @@ export default {
       const responseData = await response.json();
 
       if (responseData.Status === "Error") {
-        return embed_error(
-          message,
-          `Une erreur est survenue lors de la requête à l'API:\n${responseData["Error code"]}`
-        );
+        const embed = new EmbedBuilder.Error({
+          description: `Une erreur est survenue lors de la requête à l'API:\n${responseData["Error code"]}`,
+        });
+        return message.channel.send({ content: embed.toString() });
       }
 
-      if (responseData.List.InfoLeak.startsWith("<em>"))
-        return embed_warning(
-          message,
-          "Aucun résultat trouvé",
-          `La recherche ${args.join(" ")} n'a rien donnée.`
-        );
+      if (responseData.List.InfoLeak.startsWith("<em>")) {
+        const embed = new EmbedBuilder.Warning({
+          title: "Aucun résultat trouvé",
+          description: `La recherche ${args.join(" ")} n'a rien donnée.`,
+        });
+        return message.channel.send({ content: embed.toString() });
+      }
 
       // Formater la réponse pour une meilleure lisibilité
       const formattedResponse = formatNazAPIResponse(responseData);

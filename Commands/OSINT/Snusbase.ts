@@ -6,14 +6,14 @@ import {
 } from "../../Utils/Constants/Snusbase_Types.json";
 import { Message } from "discord.js-selfbot-v13";
 import type { ClientAttributes } from "../../Types/Client";
-import { embed_error } from "../../Components/Embeds/Error";
+import { EmbedBuilder } from "../../Components/Embeds/Builder";
 import { prefix } from "../../user-data/Settings/Bot/Bot.json";
 
 export default {
   name: "snusbase",
   description: "Obtenir des informations sur une personne via Snusbase",
   usage: `<Type de la recherche (${snusbase_types.join(
-    ", "
+    ", ",
   )} ${other_types.join(", ")})> <Recherche>`,
   args: true,
   run: async (client: ClientAttributes, message: Message, args: string[]) => {
@@ -22,11 +22,12 @@ export default {
     if (
       snusbase_types.includes(args[0]) /* && !other_types.includes(args[0])*/
     ) {
-      if (!args[1])
-        return embed_error(
-          message,
-          `Vous devez spécifier une recherche.\nPour plus d'information sur la commande, veuillez tapper ${prefix}help snusbase`
-        );
+      if (!args[1]) {
+        const embed = new EmbedBuilder.Error({
+          description: `Vous devez spécifier une recherche.\nPour plus d'information sur la commande, veuillez tapper ${prefix}help snusbase`,
+        });
+        return message.channel.send({ content: embed.toString() });
+      }
       /*
     if (other_types.includes(args[0]))
       return snusbase_discord_messages(
@@ -43,7 +44,7 @@ export default {
         args.slice(1).join(" "),
         [args[0]],
         message,
-        args[0]
+        args[0],
       );
     } else {
       // Recherche globale

@@ -5,7 +5,8 @@ import { prefix } from "../../user-data/Settings/Bot/Bot.json";
 import { ClientAttributes } from "../../Types/Client";
 import { Message } from "discord.js-selfbot-v13";
 import { Categories, JokeResponse } from "blagues-api/dist/types/types";
-
+import { EmbedBuilder } from "../../Components/Embeds/Builder";
+import logger from "../../Components/Logger/Logger";
 export default {
   name: "blagues",
   description: "Envoie une blague aléatoire de blagues-api",
@@ -20,16 +21,12 @@ export default {
         if (args[0].toLowerCase() === "categories") {
           // Afficher la liste des catégories disponibles
           const categories = blagues_lists.categories;
-          if (categories.length > 0) {
-            const categoriesList = categories.join(", ").toLowerCase();
-            return message.channel.send(
-              `Voici la liste des catégories disponibles : ${categoriesList}`,
-            );
-          } else {
-            return message.channel.send(
-              "Il n'y a pas de catégories disponibles.",
-            );
-          }
+          const categoriesList = categories.join(", ").toLowerCase();
+          const embed = new EmbedBuilder.Default({
+            title: "Blagues API",
+            description: `Voici la liste des catégories disponibles : ${categoriesList}`,
+          });
+          return message.channel.send({ content: embed.toString() });
         } else {
           // Un argument de catégorie spécifique est fourni
           const category = args[0].toUpperCase();
@@ -51,15 +48,20 @@ export default {
       }
 
       // Envoyer la blague récupérée
-      return message.channel.send(`**${blague.joke}**\n||${blague.answer}||`);
+      const embed = new EmbedBuilder.Default({
+        title: blague.joke,
+        description: blague.answer,
+      });
+      return message.channel.send({ content: embed.toString() });
     } catch (error) {
-      console.error(
-        "Une erreur s'est produite lors de la récupération de la blague :",
-        error,
+      logger.error(
+        `Une erreur s'est produite lors de la récupération de la blague : ${error}`,
       );
-      return message.channel.send(
-        "Une erreur s'est produite lors de la récupération de la blague.",
-      );
+      const embed = new EmbedBuilder.Error({
+        description:
+          "Une erreur s'est produite lors de la récupération de la blague.",
+      });
+      return message.channel.send({ content: embed.toString() });
     }
   },
 };
