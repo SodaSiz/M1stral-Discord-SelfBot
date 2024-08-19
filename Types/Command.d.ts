@@ -1,5 +1,5 @@
 import { ClientAttributes } from "./Client";
-import { Message } from 'discord.js-selfbot-v13';
+import { Message } from "discord.js-selfbot-v13";
 
 interface Command {
   type: string;
@@ -11,4 +11,4 @@ interface Command {
   run: (client: ClientAttributes, message: Message, args: string[]) => void;
 }
 
-export type {Command}
+export type { Command };
