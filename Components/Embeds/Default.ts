@@ -22,7 +22,7 @@ export async function embed(
   } = {}
 ) {
   const {
-    color = `#${embed_var.colors.default}`,
+    color = embed_var.colors.default,
     author = "",
     thumbnail = "",
     image = "",
